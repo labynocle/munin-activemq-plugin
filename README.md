@@ -20,7 +20,7 @@ Display queues status graphs in Munin.
 download `queue_` script to `/usr/share/munin/plugins/queue_` as root
 
 ~~~
-	wget -P /usr/share/munin/plugins/ https://raw.github.com/kipsnak/munin-activemq-plugin/master/queue_
+	git clone git@github.com:labynocle/munin-activemq-plugin.git
 ~~~
 
 #### Install requirements
@@ -65,7 +65,9 @@ Create a symlink to this script:
 
 if you want display multi-graph for the same ActiveMQ queue try this:
 
-	ln -s /usr/share/munin/plugins/queue_ /etc/munin/plugins/queue_<some.string>_<name.of.my.queue>
+	ln -s /usr/share/munin/plugins/queue_ /etc/munin/plugins/queue_<name.of.my.queue>--<what_you_want_to_display>
+
+    what_you_want_to_display: could be equal to dequeueCount,enqueueCount and size
 
 #### Configure graphs
 
@@ -77,18 +79,12 @@ In your Munin-node, edit the file `munin-node` in _/etc/munin/plugin-conf.d/_ an
 		env.host <my.activemq_host>
 		env.port <my.activemq.port>
 		env.category activemq_queues
-		env.type ({list.of.component})
 
 here an exemple:
 	[queue_*]
 		env.host 127.0.0.1
 		env.port 8161
 		env.category activemq_queues
-		env.type ('size','enqueueCount')
-
-As default the plugin will display only 'size' component.
-
-Nota: change `[queue_*]` to `[queue_<some.string>_*]` if you choose to display multi graph.
 
 #### Test configuration
 
